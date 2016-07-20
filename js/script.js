@@ -39,6 +39,7 @@ $(document).ready(function () {
     var channelArray = ["ESL_SC2", "cretetion", "OgamingSC2", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
     var i;
 
+    $("#results-box").hide();
     channelArray.forEach(appendToBox);
 
     function checkStatus(id) {
@@ -49,6 +50,15 @@ $(document).ready(function () {
           return {name: id.toLowerCase(), status: true};
         }
       });
+    }
+
+    function moveToTop(id) {
+      $("#" + id.name).prependTo("#results-box");
+    }
+
+    function sortDiv(arr) {
+      arr.forEach(moveToTop);
+      $("#results-box").show();
     }
 
     function recurCheckStatus(channels) {
@@ -65,14 +75,6 @@ $(document).ready(function () {
         }
       }
       return check(iarr, 0);
-    }
-
-    function moveToTop(id) {
-      $("#"+id.name).prependTo("#results-box");
-    }
-
-    function sortDiv(arr) {
-      arr.forEach(moveToTop);
     }
 
     recurCheckStatus(channelArray);
