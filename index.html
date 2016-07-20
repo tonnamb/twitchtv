@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Twitch.tv Streamers</title>
+  <meta name="description" content="Check status of Twitch.tv streamers">
+  <meta name="author" content="Tonnam Balankura">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/ico" href="images/favicon.ico">
+
+</head>
+<body>
+
+  <!-- Header
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <header class="header-twitch">
+    <div class="container">
+      <h3>Twitch.tv Streamers</h3>
+    </div>
+  </header>
+
+  <!-- Inputs: Buttons and Search Form
+  ––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <section class="inputs-section">
+    <div class="container">
+      <div class="row">
+        <div class="one-half column">
+          <button id="all">All</button>
+          <button id="online">Online</button>
+          <button id="online">Offline</button>
+        </div>
+        <div class="one-half column">
+          <input type="text" id="search-form">
+          <button id="search">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results
+  ––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <section class="results-section">
+    <div class="container" id="results-box">
+    </div>
+  </section>
+
+  <!-- Footer
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <footer class="footer-section">
+    <div class="container">
+      <p>Code written by <a href="https://tonnamb.github.io">Tonnam Balankura</a></p>
+      <p>Technology used: normalize.css, skeleton.css, jquery-3.0.0.js and Twitch's API.</p>
+    </div>
+  </footer>
+
+  <!-- Load JavaScripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <script src="js/jquery-3.0.0.js" type="text/javascript"></script>
+  <script src="js/script.js" type="text/javascript"></script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

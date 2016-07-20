@@ -1,0 +1,12 @@
+.entry-logo {
+  border-radius: 50%;
+  height: 50px;
+}
+
+.entry-logo,
+.entry-name,
+.entry-status {
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0 10px 10px 0;
+}
