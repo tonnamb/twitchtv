@@ -6,6 +6,10 @@ $(document).ready(function () {
   "use strict";
 
   (function () {
+
+    /* Initialize entries
+    ======================================== */
+
     function getTwitch(getWhat, id) {
       return $.getJSON("https://api.twitch.tv/kraken/" + getWhat + "/" + id)
         .then(function (data) {
@@ -16,15 +20,21 @@ $(document).ready(function () {
     var getChannel = getTwitch.bind(null, 'channels');
     var getStream = getTwitch.bind(null, 'streams');
 
-    function divChannel(channel) {
-      var $div = $("<div>", {"class": "entry", "id": channel.name});
-      $div.append("<img class='entry-logo' src='" + channel.logo + "'>");
-      $div.append("<p class='entry-name'><a href='https://www.twitch.tv/" + channel.name + "' target='_blank'>" + channel.display_name + "</p>");
-      getStream(channel.name).then(function (stream) {
+    function divChannel(data, id) {
+      var $div = $("<div>", {"class": "entry", "id": id.toLowerCase()});
+      if (data.logo === null) {
+        $div.append("<img class='entry-logo' src='images/redx.png'>");
+      } else {
+        $div.append("<img class='entry-logo' src='" + data.logo + "'>");
+      }
+      $div.append("<p class='entry-name'><a href='https://www.twitch.tv/" + data.name + "' target='_blank'>" + data.display_name + "</p>");
+      getStream(data.name).then(function (stream) {
         if (stream.stream === null) {
           $div.append("<p class='entry-status'>Offline</p>");
+          $div.addClass('offline-entry');
         } else {
           $div.append("<p class='entry-status'>" + stream.stream.channel.status + "</p>");
+          $div.addClass('online-entry');
         }
       });
       return $div;
@@ -32,7 +42,7 @@ $(document).ready(function () {
 
     function appendToBox(channel) {
       getChannel(channel).then(function (data) {
-        $("#results-box").append(divChannel(data));
+        $("#results-box").append(divChannel(data, channel));
       });
     }
 
@@ -41,6 +51,9 @@ $(document).ready(function () {
 
     $("#results-box").hide();
     channelArray.forEach(appendToBox);
+
+    /* Sort entries
+    ======================================== */
 
     function checkStatus(id) {
       return getStream(id).then(function (stream) {
@@ -61,7 +74,7 @@ $(document).ready(function () {
       $("#results-box").show();
     }
 
-    function recurCheckStatus(channels) {
+    function recurSortDiv(channels) {
       var iarr = [];
       function check(arr, index) {
         if (channels.length === arr.length) {
@@ -77,7 +90,34 @@ $(document).ready(function () {
       return check(iarr, 0);
     }
 
-    recurCheckStatus(channelArray);
+    recurSortDiv(channelArray);
+
+    /* All, Online, Offline Buttons
+    ======================================== */
+
+    $("#btn-online").on("click", function() {
+      $(".offline-entry").hide();
+      $(".online-entry").show();
+    })
+
+    $("#btn-offline").on("click", function() {
+      $(".offline-entry").show();
+      $(".online-entry").hide();
+    })
+
+    $("#btn-all").on("click", function() {
+      $(".offline-entry").show();
+      $(".online-entry").show();
+    })
+
+    /* Search Button
+    ======================================== */
+
+    $("#btn-search").on("click", function() {
+      appendToBox($('#search-form').val());
+      channelArray.push($('#search-form').val());
+      recurSortDiv(channelArray);
+    })
 
   }());
 
