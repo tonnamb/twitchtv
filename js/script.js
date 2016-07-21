@@ -10,18 +10,27 @@ $(document).ready(function () {
     /* Initialize entries
     ======================================== */
 
+    var channelArray = ["esl_sc2", "cretetion", "ogamingsc2", "freecodecamp", "storbeck", "habathcx", "robotcaleb", "noobs2ninjas"];
+    var i;
+
     function getTwitch(getWhat, id) {
-      return $.getJSON("https://api.twitch.tv/kraken/" + getWhat + "/" + id)
-        .then(function (data) {
+      return $.ajax({
+        dataType: "json",
+        url: "https://api.twitch.tv/kraken/" + getWhat + "/" + id,
+        success: function (data) {
           return data;
-        });
+        },
+        error: function (jqXHR, exception) {
+          alert(jqXHR.responseText);
+        }
+      });
     }
 
     var getChannel = getTwitch.bind(null, 'channels');
     var getStream = getTwitch.bind(null, 'streams');
 
-    function divChannel(data, id) {
-      var $div = $("<div>", {"class": "entry", "id": id.toLowerCase()});
+    function divChannel(data) {
+      var $div = $("<div>", {"class": "entry", "id": data.name});
       if (data.logo === null) {
         $div.append("<img class='entry-logo' src='images/redx.png'>");
       } else {
@@ -42,12 +51,9 @@ $(document).ready(function () {
 
     function appendToBox(channel) {
       getChannel(channel).then(function (data) {
-        $("#results-box").append(divChannel(data, channel));
+        $("#results-box").append(divChannel(data));
       });
     }
-
-    var channelArray = ["ESL_SC2", "cretetion", "OgamingSC2", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
-    var i;
 
     $("#results-box").hide();
     channelArray.forEach(appendToBox);
@@ -95,29 +101,36 @@ $(document).ready(function () {
     /* All, Online, Offline Buttons
     ======================================== */
 
-    $("#btn-online").on("click", function() {
+    $("#btn-online").on("click", function () {
       $(".offline-entry").hide();
       $(".online-entry").show();
-    })
+    });
 
-    $("#btn-offline").on("click", function() {
+    $("#btn-offline").on("click", function () {
       $(".offline-entry").show();
       $(".online-entry").hide();
-    })
+    });
 
-    $("#btn-all").on("click", function() {
+    $("#btn-all").on("click", function () {
       $(".offline-entry").show();
       $(".online-entry").show();
-    })
+    });
 
     /* Search Button
     ======================================== */
 
-    $("#btn-search").on("click", function() {
-      appendToBox($('#search-form').val());
-      channelArray.push($('#search-form').val());
-      recurSortDiv(channelArray);
-    })
+    $("#btn-search").on("click", function () {
+      var formVal = $('#search-form').val();
+      if ($.inArray(formVal, channelArray) === -1) {
+        getChannel(formVal).then(function (data) {
+          appendToBox(formVal);
+          channelArray.push(formVal);
+          recurSortDiv(channelArray);
+        });
+      } else {
+        alert('Channel already displayed!');
+      }
+    });
 
   }());
 
