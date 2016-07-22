@@ -21,7 +21,7 @@ $(document).ready(function () {
           return data;
         },
         error: function (jqXHR, exception) {
-          alert(jqXHR.responseText);
+          $("#status-box").text($.parseJSON(jqXHR.responseText).message);
         }
       });
     }
@@ -121,14 +121,26 @@ $(document).ready(function () {
 
     $("#btn-search").on("click", function () {
       var formVal = $('#search-form').val();
-      if ($.inArray(formVal, channelArray) === -1) {
-        getChannel(formVal).then(function (data) {
+      if ($.inArray(formVal, channelArray) === -1) { // Check for duplicate entries
+        getStream(formVal).then(function (stream) { // Check if channel exists
           appendToBox(formVal);
           channelArray.push(formVal);
           recurSortDiv(channelArray);
+          if (stream.stream === null) {
+            $("#status-box").text('Added ' + formVal + ': Offline');
+          } else {
+            $("#status-box").text('Added ' + formVal + ': Online - ' + stream.stream.channel.status);
+          }
         });
       } else {
-        alert('Channel already displayed!');
+        $("#status-box").text('Duplicate! ' + formVal + ' is already listed below.');
+      }
+    });
+
+    $("#search-form").keypress(function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        $("#btn-search").click();
       }
     });
 
