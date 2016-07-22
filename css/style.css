@@ -29,7 +29,8 @@ button.button-primary {
   border-color: #9370db;
 }
 
-button.button-primary:hover {
+button.button-primary:hover,
+button.button-primary:focus {
   background-color: #6533cb;
   border-color: #6533cb;
 }
