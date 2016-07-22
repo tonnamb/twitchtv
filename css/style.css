@@ -1,3 +1,42 @@
+/* Whole Page
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+body {
+  font-family: 'Play', sans-serif;
+}
+
+a {
+  color: #9370db;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #6533cb;
+}
+
+/* Header Section
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.header-twitch {
+  margin-top: 2rem;
+}
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+button.button-primary {
+  background-color: #9370db;
+  border-color: #9370db;
+}
+
+button.button-primary:hover {
+  background-color: #6533cb;
+  border-color: #6533cb;
+}
+
+/* Search Results - Entries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .entry-logo {
   border-radius: 50%;
   height: 50px;
@@ -9,4 +48,16 @@
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px 10px 0;
+}
+
+/* Footer Section
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.footer-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.footer-section p {
+  margin-bottom: 0;
 }
